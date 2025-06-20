@@ -4,17 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GradeQuest</title>
-  <link rel="manifest" href="/manifest.json" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js')
-          .then(reg => console.log('✅ Service Worker geregistreerd:', reg.scope))
-          .catch(err => console.error('❌ Service Worker fout:', err));
-      });
-    }
-  </script>
   <style>
     :root {
       --primary: #5f5fff;
@@ -72,10 +62,11 @@
       <h2>GradeQuest</h2>
       <nav aria-label="Hoofdnavigatie">
         <ul>
-          <li><a href="#how-it-works">Hoe werkt het</a></li>
           <li><a href="#docs">Docs</a></li>
+          <li><a href="#features">Features</a></li>
         </ul>
       </nav>
+      <a href="#" class="btn">Login / Registreer</a>
     </div>
   </header>
 
@@ -83,8 +74,8 @@
     <div class="container hero-grid">
       <div>
         <h1>Level up your school life</h1>
-        <p>GradeQuest gamet jouw rooster, aanwezigheid en prestaties op school. Helemaal zonder account – je koppelt enkel je Zermelo-portaal en gaat direct van start.</p>
-        <a href="#how-it-works" class="btn">Aan de slag</a>
+        <p>GradeQuest gamet jouw rooster, aanwezigheid en prestaties op school. Koppel eenvoudig met Zermelo en begin vandaag nog met het verdienen van XP!</p>
+        <a href="#" class="btn">Start vandaag</a>
       </div>
       <div class="stack">
         <img src="https://github.com/lucasenlucas/gradequest/blob/main/cdn/IMG_9115.jpeg?raw=true" alt="Rooster" />
@@ -94,14 +85,23 @@
     </div>
   </section>
 
+  <section class="features" id="features">
+    <div class="container features-grid">
+      <div class="feature-card"><span>📅</span><div><h3>Roosters & absenties</h3><p>Koppeling via de Zermelo‑API voor realtime rooster‑updates.</p></div></div>
+      <div class="feature-card"><span>🏆</span><div><h3>Gamification</h3><p>Verdien XP voor aanwezigheid, opdrachten en streaks.</p></div></div>
+      <div class="feature-card"><span>🧊</span><div><h3>Bervriezer</h3><p>Dag gemist? Gebruik de Bervriezer om je streak te redden.</p></div></div>
+      <div class="feature-card"><span>🎨</span><div><h3>Personalisatie</h3><p>Ontgrendel avatars, thema‑kleuren en dashboard‑achtergronden.</p></div></div>
+      <div class="feature-card"><span>🎯</span><div><h3>Quests & challenges</h3><p>Extra XP via doelen zoals een maand niet te laat komen.</p></div></div>
+    </div>
+  </section>
+
   <section class="steps" id="how-it-works">
     <div class="container">
-      <h2>Stap-voor-stap zonder account</h2>
+      <h2>Hoe werkt GradeQuest?</h2>
       <div class="step-grid">
-        <div class="step"><div class="circle">1</div><p>Open je Zermelo-portal op je laptop en klik op <em>Portal</em>.</p></div>
-        <div class="step"><div class="circle">2</div><p>Klik links op het pijltje-icoon en kies <em>Koppel externe applicatie</em>.</p></div>
-        <div class="step"><div class="circle">3</div><p>Scan de QR-code of voer de koppelcode in de app in.</p></div>
-        <div class="step"><div class="circle">4</div><p>Kies je avatar en achtergrond – klaar om XP te verdienen!</p></div>
+        <div class="step"><div class="circle">1</div><p>Koppel je Zermelo‑account en importeer automatisch je rooster en aanwezigheid.</p></div>
+        <div class="step"><div class="circle">2</div><p>Verdien XP voor dagelijks op tijd komen, opdrachten afronden en streaks opbouwen.</p></div>
+        <div class="step"><div class="circle">3</div><p>Gebruik XP om nieuwe avatars vrij te spelen en meedingen naar schoolbrede leaderboards.</p></div>
       </div>
     </div>
   </section>
