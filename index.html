@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GradeQuest</title>
+  <link rel="manifest" href="/manifest.json" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(reg => console.log('✅ Service Worker geregistreerd:', reg.scope))
+          .catch(err => console.error('❌ Service Worker fout:', err));
+      });
+    }
+  </script>
+  <style>
+    :root {
+      --primary: #5f5fff;
+      --accent: #c084fc;
+      --bg: #0b0b0f;
+      --fg: #ffffff;
+      --soft: #1a1a24;
+      --gray: #9b9b9b;
+    }
+
+    * {box-sizing:border-box;margin:0;padding:0}
+    body {font-family:'Inter',sans-serif;background:var(--bg);color:var(--fg);line-height:1.6;-webkit-font-smoothing:antialiased}
+    a{color:var(--fg);text-decoration:none}
+    .btn{display:inline-block;padding:12px 28px;border-radius:999px;font-weight:600;background:linear-gradient(90deg,var(--primary),var(--accent));color:#000}
+    .container{width:100%;max-width:1200px;margin:0 auto;padding:0 24px}
+
+    header{background:var(--bg);position:sticky;top:0;z-index:100}
+    .header-inner{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+    nav ul{display:flex;gap:32px;list-style:none}
+    nav a{font-size:0.95rem;color:var(--fg);}
+
+    .hero{padding:96px 0 64px;background:radial-gradient(ellipse at top,var(--soft) 0%,var(--bg) 100%)}
+    .hero-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));align-items:center;gap:48px}
+    .hero h1{font-size:clamp(2.5rem,5vw,3.5rem);font-weight:800;margin-bottom:16px;text-shadow:0 0 18px rgba(95,95,255,.5)}
+    .hero p{font-size:1.15rem;color:var(--gray);margin-bottom:32px;max-width:500px}
+
+    .stack{position:relative;width:260px;height:380px;margin:auto}
+    .stack img{position:absolute;width:100%;border-radius:20px;box-shadow:0 14px 32px rgba(0,0,0,.45)}
+    .stack img:nth-child(1){transform:rotate(-6deg) translate(-26px,-18px)}
+    .stack img:nth-child(2){transform:rotate(0deg)}
+    .stack img:nth-child(3){transform:rotate(6deg) translate(26px,-18px)}
+
+    .features{padding:80px 0}
+    .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:32px}
+    .feature-card{background:var(--soft);border-radius:20px;padding:28px;display:flex;gap:16px;align-items:flex-start;transition:transform .3s}
+    .feature-card:hover{transform:translateY(-6px)}
+    .feature-card span{font-size:1.8rem}
+    .feature-card h3{font-size:1.15rem;margin-bottom:6px}
+    .feature-card p{font-size:.96rem;color:var(--gray)}
+
+    .steps{padding:80px 0;background:var(--soft)}
+    .steps h2{text-align:center;font-size:2rem;margin-bottom:48px;color:var(--accent)}
+    .step-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:32px;text-align:center}
+    .step{padding:24px}
+    .step .circle{width:56px;height:56px;border-radius:50%;background:linear-gradient(90deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-weight:700;color:#000}
+    .step p{font-size:.95rem;color:var(--gray)}
+
+    footer{padding:40px 0;text-align:center;font-size:.9rem;color:var(--gray)}
+    @media(max-width:600px){nav ul{gap:18px}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <h2>GradeQuest</h2>
+      <nav aria-label="Hoofdnavigatie">
+        <ul>
+          <li><a href="#how-it-works">Hoe werkt het</a></li>
+          <li><a href="#docs">Docs</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" id="demo">
+    <div class="container hero-grid">
+      <div>
+        <h1>Level up your school life</h1>
+        <p>GradeQuest gamet jouw rooster, aanwezigheid en prestaties op school. Helemaal zonder account – je koppelt enkel je Zermelo-portaal en gaat direct van start.</p>
+        <a href="#how-it-works" class="btn">Aan de slag</a>
+      </div>
+      <div class="stack">
+        <img src="https://github.com/lucasenlucas/gradequest/blob/main/cdn/IMG_9115.jpeg?raw=true" alt="Rooster" />
+        <img src="https://github.com/lucasenlucas/gradequest/blob/main/cdn/F7AB435D-9569-4AE0-8C3B-E9CFA42EB3B3.png?raw=true" alt="Dashboard" />
+        <img src="https://github.com/lucasenlucas/gradequest/blob/main/cdn/24DF4A9C-B4BA-4D18-9FA9-38BF0DCE758A.png?raw=true" alt="Prestaties" />
+      </div>
+    </div>
+  </section>
+
+  <section class="steps" id="how-it-works">
+    <div class="container">
+      <h2>Stap-voor-stap zonder account</h2>
+      <div class="step-grid">
+        <div class="step"><div class="circle">1</div><p>Open je Zermelo-portal op je laptop en klik op <em>Portal</em>.</p></div>
+        <div class="step"><div class="circle">2</div><p>Klik links op het pijltje-icoon en kies <em>Koppel externe applicatie</em>.</p></div>
+        <div class="step"><div class="circle">3</div><p>Scan de QR-code of voer de koppelcode in de app in.</p></div>
+        <div class="step"><div class="circle">4</div><p>Kies je avatar en achtergrond – klaar om XP te verdienen!</p></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 GradeQuest. Alle rechten voorbehouden.
+  </footer>
+</body>
+</html>
