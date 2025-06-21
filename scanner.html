@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> jaa dat is een QR‑scanner xD</title>
+  <style>
+    :root {
+      --bg:#000;--fg:#fff;--blue:#007aff;--gray:#999;
+      font-family:-apple-system,BlinkMacSystemFont,'Inter',sans-serif
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:var(--bg);color:var(--fg);display:flex;flex-direction:column;align-items:center;text-align:center;min-height:100vh;padding:2rem 1rem;gap:1.4rem}
+    h1{font-size:2.2rem;font-weight:800}
+    p{max-width:480px;line-height:1.6;color:var(--gray)}
+    #video{width:100%;max-width:380px;border-radius:12px;background:#111;box-shadow:0 4px 16px rgba(0,0,0,.5)}
+    .btn{padding:.9rem 1.8rem;border:none;border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer;background:var(--blue);color:#fff;margin-top:1rem}
+    input[type="text"]{width:100%;max-width:380px;padding:.8rem;border-radius:12px;border:none;margin-top:.8rem;font-size:1rem}
+    small{color:var(--gray);font-size:.85rem;margin-top:.4rem;display:block}
+  </style>
+</head>
+<body>
+  <h1>QR‑code scannen</h1>
+  <p>Richt je camera op de QR‑code die je in het Zermelo‑portaal ziet. Zodra we de code herkennen wordt je rooster gekoppeld.</p>
+  <video id="video" playsinline></video>
+  <p>– of –</p>
+  <input id="manualCode" type="text" placeholder="Koppelcode handmatig invoeren" />
+  <button class="btn" onclick="saveManual()">Opslaan</button>
+  <small>Toegang tot je camera is alleen nodig om de QR‑code te lezen – er worden geen beelden opgeslagen.</small>
+
+  <!-- jsQR library -->
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+
+  <script>
+  const video = document.getElementById('video');
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+
+  async function startCamera(){
+    try{
+      const stream = await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});
+      video.srcObject = stream;
+      await video.play();
+      requestAnimationFrame(scanFrame);
+    }catch(e){
+      console.error('Camera‑toegang geweigerd',e);
+    }
+  }
+
+  function scanFrame(){
+    if(video.readyState===video.HAVE_ENOUGH_DATA){
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      ctx.drawImage(video,0,0,canvas.width,canvas.height);
+      const img = ctx.getImageData(0,0,canvas.width,canvas.height);
+      const code = jsQR(img.data,img.width,img.height,{ inversionAttempts:'dontInvert' });
+      if(code){
+        saveToken(code.data.trim());
+        return; // stop scanning
+      }
+    }
+    requestAnimationFrame(scanFrame);
+  }
+
+  function saveToken(token){
+    if(!token) return;
+    localStorage.setItem('zermelo_token',token);
+    alert('✅ Token opgeslagen!');
+    window.location.href='index.html';
+  }
+
+  function saveManual(){
+    const val = document.getElementById('manualCode').value.trim();
+    if(val){ saveToken(val); }
+  }
+
+  // start camera as soon as page loads
+  if('mediaDevices' in navigator){startCamera();}
+  </script>
+</body>
+</html>
