@@ -3,53 +3,37 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zermelo API Test</title>
+  <title>Zermelo API Test – ~me</title>
   <style>
-    body {
-      background: #000;
-      color: #fff;
-      font-family: system-ui, sans-serif;
-      padding: 2rem;
-      text-align: center;
-    }
-    .result {
-      margin-top: 2rem;
-      text-align: left;
-      background: #111;
-      padding: 1rem;
-      border-radius: 12px;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
+    body{background:#000;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'Inter',sans-serif;min-height:100vh;padding:2rem;text-align:center}
+    pre{background:#111;padding:1rem;border-radius:12px;overflow:auto;max-width:700px;margin:2rem auto;font-size:.9rem;line-height:1.5}
+    input{padding:.6rem;border-radius:10px;border:none;background:#111;color:#fff;max-width:450px;width:100%}
+    button{margin-top:1rem;padding:.7rem 1.4rem;border:none;border-radius:10px;background:#007aff;color:#fff;font-weight:600;cursor:pointer}
   </style>
 </head>
 <body>
-  <h1>🔍 Zermelo API Test</h1>
-  <p>De API wordt nu live aangeroepen met jouw opgeslagen token...</p>
-  <div class="result" id="output">Even geduld...</div>
+  <h1>Test: /users/~me endpoint</h1>
+  <p>Voer je Zportal-subdomein in en klik op Test.<br>Voorbeeld: <code>sgdc</code> → volledige URL wordt <code>https://sgdc.zportal.nl</code>.</p>
+  <input id="sub" placeholder="schoolsubdomein" />
+  <button onclick="run()">Test API-call</button>
+  <pre id="out">⏳ Wachten op test…</pre>
 
   <script>
-    const token = localStorage.getItem("zermeloToken");
-    const output = document.getElementById("output");
+    function out(t){document.getElementById('out').textContent=t;}
 
-    if (!token) {
-      output.textContent = "❌ Geen Zermelo-token gevonden in localStorage.";
-    } else {
-      fetch(`https://sgdc.zportal.nl/api/v3/users?access_token=${token}`)
-        .then(res => {
-          if (!res.ok) throw new Error(`HTTP ${res.status}`);
-          return res.json();
-        })
-        .then(data => {
-          output.textContent = JSON.stringify(data, null, 2);
-        })
-        .catch(err => {
-          output.textContent = `❌ Fout bij ophalen gegevens:\n${err}`;
-        });
-    }
+    async function run(){
+      const sub = document.getElementById('sub').value.trim();
+      if(!sub){out('❌ Vul je schoolsubdomein in.');return;}
+      const token=localStorage.getItem('zermeloToken');
+      if(!token){out('❌ Geen zermeloToken in localStorage.');return;}
+      out('⏳ Bezig met ophalen …');
+      try{
+        const url=`https://${sub}.zportal.nl/api/v3/users/~me?access_token=${token}`;
+        const r=await fetch(url);
+        if(!r.ok) throw new Error(`${r.status} ${r.statusText}`);
+        const data=await r.json();
+        out(JSON.stringify(data,null,2));
+      }catch(e){out(`❌ Fout: ${e.message}`);}  }
   </script>
 </body>
 </html>
