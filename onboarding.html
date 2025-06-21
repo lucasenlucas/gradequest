@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rooster voor Zermelo – Onboarding</title>
+  <style>
+    :root {
+      --bg: #000;
+      --fg: #fff;
+      --blue: #007aff;
+      --gray: #999;
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--fg); text-align: center; min-height: 100vh; display: flex; flex-direction: column; }
+    h1, h2 { font-weight: 800; margin-bottom: .75rem; }
+    h1 { font-size: 3rem; }
+    h2 { font-size: 2.4rem; }
+    p { line-height: 1.6; margin: .5rem 0 1.5rem; font-size: 1.05rem; padding: 0 1rem; }
+    .btn { display: inline-block; margin: 1.5rem 0 0; padding: .9rem 1.8rem; font-size: 1rem; border: none; border-radius: 12px; background: var(--blue); color: #fff; cursor: pointer; }
+    .btn.secondary { background: #222; color: var(--gray); }
+    .view { display: none; padding: 2rem 1rem; flex: 1 0 auto; animation: fade .4s ease; }
+    .view.active { display: block; }
+    nav.top { text-align: left; padding: 1rem 1rem .5rem; }
+    nav.top a { color: var(--blue); font-size: 1.1rem; text-decoration: none; }
+    @keyframes fade { from {opacity: .2; transform: translateY(8px);} to {opacity: 1; transform: translateY(0);} }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===== VIEW 0 – WELKOM ===== -->
+  <section id="v0" class="view active">
+    <h1>Welkom</h1>
+    <p>Welkom bij <strong>Rooster&nbsp;voor&nbsp;Zermelo</strong>.<br>
+       Om je rooster te zien moeten we je eerst koppelen.</p>
+    <button class="btn" onclick="next()">Laten we beginnen</button>
+  </section>
+
+  <!-- ===== VIEW 1 – STAP 1 ===== -->
+  <section id="v1" class="view">
+    <nav class="top"><a href="javascript:prev()">&larr; Terug</a></nav>
+    <h2>Stap 1</h2>
+    <p>Open op je laptop jouw <strong>Zermelo Portal</strong> en klik op “Portal”.</p>
+    <button class="btn" onclick="next()">Volgende</button>
+  </section>
+
+  <!-- ===== VIEW 2 – STAP 2 ===== -->
+  <section id="v2" class="view">
+    <nav class="top"><a href="javascript:prev()">&larr; Terug</a></nav>
+    <h2>Stap 2</h2>
+    <p>Klik links op het pijltje‑icoon en kies <em>“Koppel externe applicatie”</em>.</p>
+    <button class="btn" onclick="next()">Volgende</button>
+  </section>
+
+  <!-- ===== VIEW 3 – STAP 3 ===== -->
+  <section id="v3" class="view">
+    <nav class="top"><a href="javascript:prev()">&larr; Terug</a></nav>
+    <h2>Stap 3</h2>
+    <p>Je ziet nu een QR‑code en/of koppelcode.<br>Scan de code of voer 'm handmatig in.</p>
+    <button class="btn" onclick="location.href='scanner.html'">QR-code scannen</button><br>
+    <button class="btn secondary" onclick="location.href='code.html'">Code invoeren</button>
+  </section>
+
+  <!-- ===== JS ===== -->
+  <script>
+    let step = 0;
+    const views = [...document.querySelectorAll('.view')];
+
+    function show(n) {
+      views[step].classList.remove('active');
+      step = n;
+      views[step].classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+    function next() { if (step < views.length - 1) show(step + 1); }
+    function prev() { if (step > 0) show(step - 1); }
+  </script>
+
+</body>
+</html>
