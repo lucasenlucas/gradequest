@@ -1,1 +1,16 @@
-
+{
+  "name": "GradeQuest",
+  "short_name": "GradeQuest",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#007aff",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://github.com/lucasenlucas/gradequest/blob/main/cdn/logo/GradeQuest-2.png?raw=true",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
