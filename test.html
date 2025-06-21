@@ -5,50 +5,50 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Zermelo API Test</title>
   <style>
-    :root {
-      --bg:#000;--fg:#fff;--blue:#007aff;--red:#ff5555;
-      font-family:-apple-system,BlinkMacSystemFont,'Inter',sans-serif;
+    body {
+      background: #000;
+      color: #fff;
+      font-family: system-ui, sans-serif;
+      padding: 2rem;
+      text-align: center;
     }
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{background:var(--bg);color:var(--fg);min-height:100vh;padding:2rem;display:flex;flex-direction:column;gap:1.2rem}
-    h1{font-size:2rem;font-weight:800}
-    p{color:#aaa;max-width:600px}
-    pre{background:#111;padding:1.2rem;border-radius:12px;overflow-x:auto;font-size:.9rem;line-height:1.5}
-    .error{color:var(--red);font-weight:600}
-    input{padding:.6rem 1rem;border-radius:8px;border:none;background:#111;color:#fff;width:100%;max-width:420px}
-    button{margin-top:1rem;padding:.7rem 1.4rem;border:none;border-radius:10px;background:var(--blue);color:#fff;font-weight:600;cursor:pointer}
+    .result {
+      margin-top: 2rem;
+      text-align: left;
+      background: #111;
+      padding: 1rem;
+      border-radius: 12px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
   </style>
 </head>
 <body>
-  <h1>Zermelo API Test</h1>
-  <p>We halen de gebruikers-endpoint op via je <code>Cloudflare Worker</code>. Vul hieronder je Worker-URL (eenmalig) en klik op Test.</p>
-
-  <input id="workerUrl" placeholder="https://gradequest-proxy.<user>.workers.dev" />
-  <button onclick="runTest()">Test API-call</button>
-
-  <pre id="output">⏳ Wachten op test…</pre>
+  <h1>🔍 Zermelo API Test</h1>
+  <p>De API wordt nu live aangeroepen met jouw opgeslagen token...</p>
+  <div class="result" id="output">Even geduld...</div>
 
   <script>
-    // Helper: toon in output
-    const out = s => document.getElementById('output').textContent = s;
+    const token = localStorage.getItem("zermeloToken");
+    const output = document.getElementById("output");
 
-    async function runTest(){
-      const workerBase = document.getElementById('workerUrl').value.trim();
-      if(!workerBase){ out('❌ Voer eerst je Worker-URL in.'); return; }
-
-      const token = localStorage.getItem('zermeloToken');
-      if(!token){ out('❌ Geen token gevonden in localStorage (key: zermeloToken).'); return; }
-
-      out('⏳ Bezig met ophalen …');
-      try{
-        const url = `${workerBase}/api/v3/users?access_token=${token}`;
-        const res = await fetch(url);
-        if(!res.ok) throw new Error(`${res.status} ${res.statusText}`);
-        const data = await res.json();
-        out(JSON.stringify(data, null, 2));
-      }catch(e){
-        out(`❌ Fout: ${e.message}`);
-      }
+    if (!token) {
+      output.textContent = "❌ Geen Zermelo-token gevonden in localStorage.";
+    } else {
+      fetch(`https://sgdc.zportal.nl/api/v3/users?access_token=${token}`)
+        .then(res => {
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          return res.json();
+        })
+        .then(data => {
+          output.textContent = JSON.stringify(data, null, 2);
+        })
+        .catch(err => {
+          output.textContent = `❌ Fout bij ophalen gegevens:\n${err}`;
+        });
     }
   </script>
 </body>
