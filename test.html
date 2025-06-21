@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zermelo API Test</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #000;
+      color: #fff;
+      padding: 2rem;
+    }
+    pre {
+      background: #111;
+      padding: 1rem;
+      border-radius: 12px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Zermelo API Test</h1>
+  <p>De response van de Zermelo API wordt hieronder weergegeven:</p>
+  <pre id="output">...</pre>
+
+  <script>
+    const token = localStorage.getItem('zermeloToken');
+    const schoolUrl = "https://sgdc.zportal.nl"; // Pas aan voor jouw school
+
+    if (!token) {
+      document.getElementById("output").textContent = "❌ Geen token gevonden in localStorage.";
+    } else {
+      fetch(`${schoolUrl}/api/v3/users?access_token=${token}`)
+        .then(res => {
+          if (!res.ok) throw new Error("Fout bij ophalen gegevens");
+          return res.json();
+        })
+        .then(data => {
+          document.getElementById("output").textContent = JSON.stringify(data, null, 2);
+        })
+        .catch(err => {
+          document.getElementById("output").textContent = `❌ Fout: ${err.message}`;
+        });
+    }
+  </script>
+</body>
+</html>
