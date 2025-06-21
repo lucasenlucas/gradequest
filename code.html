@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Koppelcode invoeren</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      background: #000;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    input {
+      padding: 0.8rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: none;
+      width: 100%;
+      max-width: 320px;
+      margin-bottom: 1rem;
+      background: #111;
+      color: #fff;
+    }
+    button {
+      padding: 0.8rem 1.6rem;
+      background: #007aff;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Voer je koppelcode in</h1>
+  <input type="text" id="code" placeholder="Bijv. tri73ueausu857umshrnrgl50n" />
+  <button onclick="saveToken()">Opslaan</button>
+
+  <script>
+    function saveToken() {
+      const code = document.getElementById('code').value.trim();
+      if (code) {
+        localStorage.setItem('zermeloToken', code);
+        alert('✅ Token opgeslagen!');
+        location.href = 'dashboard.html'; // of wat je volgende stap is
+      } else {
+        alert('⚠️ Vul een geldige code in.');
+      }
+    }
+  </script>
+</body>
+</html>
